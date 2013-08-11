@@ -13,6 +13,7 @@ for (var i = 0; i < sheep_img_file.length; i++) {
 }
 
 var sheep_img = {};
-sheep_img.idle = [ sheep_img_raw[0] ];
+//sheep_img.idle = [ sheep_img_raw[0] ];
+sheep_img.idle = [ sheep_img_raw[3], sheep_img_raw[4], sheep_img_raw[5] ];
 sheep_img.run = [ sheep_img_raw[1], sheep_img_raw[2] ];
-sheep_img.eat = [ sheep_img_raw[3], sheep_img_raw[4], sheep_img_raw[5] ];
+//sheep_img.eat = [ sheep_img_raw[3], sheep_img_raw[4], sheep_img_raw[5] ];

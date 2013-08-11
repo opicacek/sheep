@@ -53,7 +53,14 @@ Engine.prototype.moveBro = function(socket_id, parameters) {
 		
 	var distance = Math.sqrt( Math.pow(x_delta, 2) + Math.pow(y_delta, 2) );
 	if (distance == 0) {
-		bro.skin.animation = "idle";
+		
+		if (bro.skin.animation == "idle") {
+			bro.skin.animation_frame += 1;
+		} else {
+			bro.skin.animation_frame = 0;
+			bro.skin.animation = "idle";
+		}
+		
 		return;
 	}
 	
@@ -63,7 +70,13 @@ Engine.prototype.moveBro = function(socket_id, parameters) {
 	} else if (x_delta < 0) {
 		bro.skin.left = true;
 	}
-	bro.skin.animation = "run";
+	
+	if (bro.skin.animation == "run") {
+		bro.skin.animation_frame += 1;
+	} else {
+		bro.skin.animation_frame = 0;
+		bro.skin.animation = "run";
+	}
 	
 	//var tan_angle = y_delta / x_delta;
 	var cos_angle = Math.abs(x_delta) / distance;

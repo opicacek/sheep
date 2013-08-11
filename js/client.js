@@ -89,7 +89,8 @@ function play() {
 			*/
 			//var img_index = 0; //TODO get index from server
 			var animation = bro_list[bro_key].skin.animation; //TODO
-			var animation_frame = bro_list[bro_key].skin.animation_frame; //TODO
+			//var animation_frame = bro_list[bro_key].skin.animation_frame; //TODO
+			var animation_frame = Math.floor((bro_list[bro_key].skin.animation_frame) / 10) % sheep_img[animation].length; //TODO
 
 			if (bro_list[bro_key].skin.left) {
 				ctx.drawImage(sheep_img[animation][animation_frame], center_x - sheep_img[animation][animation_frame].width/2, center_y - sheep_img[animation][animation_frame].height/2);
