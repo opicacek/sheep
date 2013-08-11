@@ -48,7 +48,7 @@ function play() {
 	function drawWorld() {
 		// background
 		if ( typeof(map) == "undefined" ) {
-			//TODO display image of grass
+			// display image of grass
 			//ctx.fillStyle = "rgb(0, 0, 0)";
 			//ctx.fillRect(0, 0, screen_w, screen_h);
 			ctx.drawImage(grass_img, 0, 0);
@@ -72,19 +72,33 @@ function play() {
 		
 		for (var bro_key in bro_list) {
 						
-			var centerX = bro_list[bro_key].pos[0];
-			var centerY = bro_list[bro_key].pos[1];
-			var radius = 10;
+			var center_x = bro_list[bro_key].pos[0];
+			var center_y = bro_list[bro_key].pos[1];
 
+			// player represented by circle
+			/*
+			var radius = 10;
 			ctx.beginPath();
-			ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
-			//console.log(centerX, centerY);
+			ctx.arc(center_x, center_y, radius, 0, 2 * Math.PI, false);
 			ctx.fillStyle = "rgb(255, 255, 255)";
 			if (bro_key == my_bro.id) {
 				ctx.fillStyle = "rgb(255, 0, 0)";
 			}
 			
 			ctx.fill();
+			*/
+			//var img_index = 0; //TODO get index from server
+			var animation = bro_list[bro_key].skin.animation; //TODO
+			var animation_frame = bro_list[bro_key].skin.animation_frame; //TODO
+
+			if (bro_list[bro_key].skin.left) {
+				ctx.drawImage(sheep_img[animation][animation_frame], center_x - sheep_img[animation][animation_frame].width/2, center_y - sheep_img[animation][animation_frame].height/2);
+			} else {
+				ctx.save();
+                ctx.scale(-1, 1);
+				ctx.drawImage(sheep_img[animation][animation_frame], -(center_x + sheep_img[animation][animation_frame].width/2), center_y - sheep_img[animation][animation_frame].height/2);
+				ctx.restore();
+			}
 		}
 	}
 

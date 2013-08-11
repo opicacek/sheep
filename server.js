@@ -22,7 +22,7 @@ io.sockets.on('connection', function (socket) {
 	var socket_id;
 	socket.on('add_bro', function (data) {
 		socket_id = data.id;
-		data.score = 0; // set default score
+		//data.score = 0; // set default score
 		en.bro_list[data.id] = data;
 		socket.on('disconnect', function () {
 			en.pipeline[data.id] = {deleteBro: socket_id};

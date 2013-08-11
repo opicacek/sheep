@@ -53,8 +53,18 @@ Engine.prototype.moveBro = function(socket_id, parameters) {
 		
 	var distance = Math.sqrt( Math.pow(x_delta, 2) + Math.pow(y_delta, 2) );
 	if (distance == 0) {
+		bro.skin.animation = "idle";
 		return;
 	}
+	
+	// change skin of sheep
+	if (x_delta > 0) {
+		bro.skin.left = false;
+	} else if (x_delta < 0) {
+		bro.skin.left = true;
+	}
+	bro.skin.animation = "run";
+	
 	//var tan_angle = y_delta / x_delta;
 	var cos_angle = Math.abs(x_delta) / distance;
 	var sin_angle = Math.abs(y_delta) / distance;
