@@ -106,7 +106,7 @@ function play() {
 	// Bro to server
 	//var socket = io.connect('192.168.2.102'); //TODO
 	//var socket = io.connect('localhost'); //TODO
-	var socketio.connect();
+	var socket = io.connect();
 	socket.emit('add_bro', my_bro);
 	
 	// get positions of all Bros
