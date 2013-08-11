@@ -42,7 +42,7 @@ io.sockets.on('connection', function (socket) {
 });
 
 var timer = 0;
-var loop_time = 20;
+var loop_time = 200;
 
 function updateBros() {
 	

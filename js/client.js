@@ -134,7 +134,7 @@ function play() {
 		//socket.emit('update_bro', my_bro);
 		socket.emit('update_bro', {moveBro: my_bro.goal_pos});
 
-		setTimeout(updateBros, 20);
+		setTimeout(updateBros, 200);
 	}
 	updateBros();
 	
