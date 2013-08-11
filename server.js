@@ -22,6 +22,7 @@ io.sockets.on('connection', function (socket) {
 	var socket_id;
 	socket.on('add_bro', function (data) {
 		socket_id = data.id;
+		data.score = 0; // set default score
 		en.bro_list[data.id] = data;
 		socket.on('disconnect', function () {
 			en.pipeline[data.id] = {deleteBro: socket_id};
@@ -42,13 +43,10 @@ function updateBros() {
 	// grass growth
 	if (timer == 3000) {
 		timer = 0;
-		en.grassGrowth();
-	}
+		en.growthGrass();
+	}	
 	
-	// grass eating
-	
-	
-	io.sockets.emit('bro_list', {bro_list: en.bro_list, map: en.grass});
+	io.sockets.emit('bro_list', {bro_list: en.bro_list, map: {tile_size: en.tile_size, size: en.grass_size, grass:en.grass} });
 	en.process();
 	
 	timer += loop_time;

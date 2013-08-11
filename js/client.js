@@ -11,6 +11,7 @@ function play() {
 	var c = document.getElementById('c');
 	var ctx = c.getContext('2d');
 
+	//TODO get canvas size from server
 	c.width = 760;
 	c.height = 400;
 
@@ -50,16 +51,16 @@ function play() {
 			ctx.fillStyle = "rgb(0, 0, 0)";
 			ctx.fillRect(0, 0, screen_w, screen_h);
 		} else {
-			for (var x = 0; x < map.length; x++) {
-				for (var y = 0; y < map[0].length; y++) {
-					ctx.fillStyle = "rgb(0, " + (50 * map[x][y]) + ", 0)";
+			for (var x = 0; x < map.size[0]; x++) {
+				for (var y = 0; y < map.size[1]; y++) {
+					ctx.fillStyle = "rgb(0, " + (50 * map.grass[x][y]) + ", 0)";
 					ctx.fillRect(x*20, y*20, 20, 20);
 				}
 			}
 		}
 	}
 	
-	function drawBros(bro_list) {
+	function drawBros() {
 		
 		for (var bro_key in bro_list) {
 						
@@ -91,6 +92,16 @@ function play() {
 		map = data.map;
 		
 	});
+	
+	function updateScore() {
+		//TODO update highcores
+		/*
+		for (var bro_key in bro_list) {
+			console.log(bro_list[bro_key].score);
+		}
+		console.log("============");
+		*/
+	}
 
 	// send Bro position to server
 	function updateBros() {
@@ -118,7 +129,9 @@ function play() {
 
 			drawWorld();
 						
-			drawBros(bro_list);
+			drawBros();
+			
+			updateScore();
 		
 			// update time stuffs
 			then = now - (delta % interval);		
