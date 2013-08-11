@@ -1,6 +1,39 @@
 function Engine() {
 	this.bro_list = {};
 	this.pipeline = {};
+	
+	// set game map parameters
+	this.tile_size = 20;
+	var x_size = 38;
+	var y_size = 20;
+	
+	this.grass = [];
+	for (i = 0; i < x_size; i++) {
+		this.grass.push([]);
+		for (j = 0; j < y_size; j++) {
+			//this.grass[i].push(1); //TODO
+			this.grass[i].push( Math.floor(Math.random()*4) ); //TODO
+		}
+	}
+}
+Engine.prototype.grassGrowth = function() {
+	for (var x = 0; x < this.grass.length; x++) {
+		for (var y = 0; y < this.grass[0].length; y++) {
+			if (this.grass[x][y] < 6) {
+				this.grass[x][y] += 1;
+			}
+		}
+	}
+}
+Engine.prototype.eatGrass = function() {
+	for (var bro in this.bro_list) {
+		var x = Math.floor( this.bro_list[bro].pos[0] / this.tile_size);
+		var y = Math.floor( this.bro_list[bro].pos[1] / this.tile_size);
+				
+		if ( this.grass[x][y] > 0 ) {
+			this.grass[x][y] -= 1;
+		}
+	}
 }
 Engine.prototype.deleteBro = function(socket_id, parameters) {
 	delete this.bro_list[parameters];
@@ -35,5 +68,7 @@ Engine.prototype.process = function() {
 			this[command](socket_id, parameters);
 		}
 	}
+	
+	this.eatGrass();
 }
 exports.Engine = Engine;

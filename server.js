@@ -34,9 +34,24 @@ io.sockets.on('connection', function (socket) {
 	});
 });
 
+var timer = 0;
+var loop_time = 20;
+
 function updateBros() {
-	io.sockets.emit('bro_list', en.bro_list);
+	
+	// grass growth
+	if (timer == 3000) {
+		timer = 0;
+		en.grassGrowth();
+	}
+	
+	// grass eating
+	
+	
+	io.sockets.emit('bro_list', {bro_list: en.bro_list, map: en.grass});
 	en.process();
-	setTimeout(updateBros, 20);
+	
+	timer += loop_time;
+	setTimeout(updateBros, loop_time);
 }
 updateBros();

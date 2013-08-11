@@ -18,7 +18,10 @@ function play() {
 	var screen_h = c.height;
 	
 	//
-	var my_bro = new Bro();
+	var bro_list; // list of online players
+	var map; // map status
+
+	var my_bro = new Bro(); // player
 	my_bro.pos.push( Math.floor(Math.random()*screen_w), Math.floor(Math.random()*screen_h) );
 
 	//TODO same id for user all the time, get from local storage
@@ -32,8 +35,8 @@ function play() {
 	function mouseDown(e) {
 		if (e.button == 0) { // left click
 			// get click position
-			var mouse_x = event.pageX - document.documentElement.scrollLeft - c.offsetLeft;
-			var mouse_y = event.pageY - document.documentElement.scrollTop - c.offsetTop;
+			var mouse_x = e.pageX - document.documentElement.scrollLeft - c.offsetLeft;
+			var mouse_y = e.pageY - document.documentElement.scrollTop - c.offsetTop;
 			//console.log(mouse_x, mouse_y);
 
 			// set goal fro Bro
@@ -42,9 +45,18 @@ function play() {
 	}
 
 	function drawWorld() {
-		// background 
-		ctx.fillStyle = "rgb(255, 255, 255)";
-		ctx.fillRect(0, 0, screen_w, screen_h);
+		// background
+		if ( typeof(map) == "undefined" ) {
+			ctx.fillStyle = "rgb(0, 0, 0)";
+			ctx.fillRect(0, 0, screen_w, screen_h);
+		} else {
+			for (var x = 0; x < map.length; x++) {
+				for (var y = 0; y < map[0].length; y++) {
+					ctx.fillStyle = "rgb(0, " + (50 * map[x][y]) + ", 0)";
+					ctx.fillRect(x*20, y*20, 20, 20);
+				}
+			}
+		}
 	}
 	
 	function drawBros(bro_list) {
@@ -58,9 +70,9 @@ function play() {
 			ctx.beginPath();
 			ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
 			//console.log(centerX, centerY);
-			ctx.fillStyle = "rgb(255, 0, 0)";
+			ctx.fillStyle = "rgb(255, 255, 255)";
 			if (bro_key == my_bro.id) {
-				ctx.fillStyle = "rgb(0, 255, 0)";
+				ctx.fillStyle = "rgb(255, 0, 0)";
 			}
 			
 			ctx.fill();
@@ -68,26 +80,22 @@ function play() {
 	}
 
 	// Bro to server
-	var bro_list;
-
-	var socket = io.connect('192.168.2.102'); //TODO
-	//var socket = io.connect('localhost'); //TODO
+	//var socket = io.connect('192.168.2.102'); //TODO
+	var socket = io.connect('localhost'); //TODO
 	socket.emit('add_bro', my_bro);
 	
 	// get positions of all Bros
 	socket.on('bro_list', function (data) {
 		//console.log("got Bros from server:", data);
-		bro_list = data; //TODO dont drop bro_list
-
-		// TODO logical steps - leave it to server
-		// move Bro
-		//my_bro.pos = my_bro_goal;
+		bro_list = data.bro_list;
+		map = data.map;
+		
 	});
 
 	// send Bro position to server
 	function updateBros() {
 		//console.log("informations send to server");
-				
+		
 		//socket.emit('update_bro', my_bro);
 		socket.emit('update_bro', {moveBro: my_bro.goal_pos});
 
