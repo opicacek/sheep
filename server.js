@@ -9,6 +9,12 @@ var en = new engine.Engine()
 // accessible from the web
 var fileServer = new static.Server('./');
 
+
+io.configure(function () { 
+	io.set("transports", ["xhr-polling"]); 
+	io.set("polling duration", 10); 
+});
+
 // This is the port for our web server.
 // you will need to go to http://localhost:8080 to see it
 app.listen(process.env.PORT || 8080);
