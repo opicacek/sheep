@@ -48,13 +48,21 @@ function play() {
 	function drawWorld() {
 		// background
 		if ( typeof(map) == "undefined" ) {
-			ctx.fillStyle = "rgb(0, 0, 0)";
-			ctx.fillRect(0, 0, screen_w, screen_h);
+			//TODO display image of grass
+			//ctx.fillStyle = "rgb(0, 0, 0)";
+			//ctx.fillRect(0, 0, screen_w, screen_h);
+			ctx.drawImage(grass_img, 0, 0);
 		} else {
 			for (var x = 0; x < map.size[0]; x++) {
 				for (var y = 0; y < map.size[1]; y++) {
-					ctx.fillStyle = "rgb(0, " + (50 * map.grass[x][y]) + ", 0)";
-					ctx.fillRect(x*20, y*20, 20, 20);
+					//ctx.fillStyle = "rgb(0, " + (50 * map.grass[x][y]) + ", 0)";
+					//ctx.fillRect(x*map.tile_size, y*map.tile_size, map.tile_size, map.tile_size);
+					
+					ctx.save();
+					ctx.globalAlpha = map.grass[x][y] * 0.11;
+					ctx.drawImage(grass_img, x*map.tile_size, y*map.tile_size, map.tile_size, map.tile_size, x*map.tile_size, y*map.tile_size, map.tile_size, map.tile_size);
+					ctx.restore();
+					
 				}
 			}
 		}
@@ -127,6 +135,7 @@ function play() {
 		
 		if (delta > interval) {
 
+			ctx.clearRect(0, 0, screen_w, screen_h);
 			drawWorld();
 						
 			drawBros();

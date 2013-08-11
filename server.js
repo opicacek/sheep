@@ -41,7 +41,7 @@ var loop_time = 20;
 function updateBros() {
 	
 	// grass growth
-	if (timer == 3000) {
+	if (timer == 5000) {
 		timer = 0;
 		en.growthGrass();
 	}	

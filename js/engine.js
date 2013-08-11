@@ -15,14 +15,14 @@ Engine.prototype.generateGrass = function() {
 		this.grass.push([]);
 		for (j = 0; j < this.grass_size[1]; j++) {
 			//this.grass[i].push(1); //
-			this.grass[i].push( Math.floor(Math.random()*4) ); // random
+			this.grass[i].push( Math.floor(Math.random()*10) ); // random
 		}
 	}
 }
 Engine.prototype.growthGrass = function() {
 	for (var x = 0; x < this.grass.length; x++) {
 		for (var y = 0; y < this.grass[0].length; y++) {
-			if (this.grass[x][y] < 6) {
+			if (this.grass[x][y] < 10) {
 				this.grass[x][y] += 1;
 			}
 		}
