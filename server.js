@@ -9,13 +9,14 @@ var en = new engine.Engine()
 // accessible from the web
 var fileServer = new static.Server('./');
 
-//TODO required for Heroku
-/*
-io.configure(function () { 
-	io.set("transports", ["xhr-polling"]); 
-	io.set("polling duration", 10); 
+//TODO alternatives to websockets
+io.configure(function () {
+	io.set("transports", ["xhr-polling"]);
+	io.set("polling duration", 10);
+	io.set("heartbeat interval", 3); //TODO kill idle users
+	io.set("heartbeat timeout", 5);
+	io.set("close timeout ", 5);
 });
-*/
 
 // This is the port for our web server.
 // you will need to go to http://localhost:8080 to see it
@@ -33,7 +34,7 @@ io.sockets.on('connection', function (socket) {
 		//data.score = 0; // set default score
 		en.bro_list[data.id] = data;
 		socket.on('disconnect', function () {
-			en.pipeline[data.id] = {deleteBro: socket_id};
+			en.pipeline[data.id] = {deleteBro: socket_id}; //TODO works only with websockets
 	    });
 	});
 	socket.on('update_bro', function (commands) {

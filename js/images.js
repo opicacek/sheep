@@ -2,6 +2,12 @@
 var grass_img = new Image();
 grass_img.src = "../img/map/grass.png";
 
+var flower_blue_img = new Image();
+flower_blue_img.src = "../img/map/flower_blue.png";
+var flower_red_img = new Image();
+flower_red_img.src = "../img/map/flower_red.png";
+
+
 // sheep
 var sheep_img_file = ["idle.png", "run1.png",  "run2.png", "eat1.png",  "eat2.png",  "eat3.png", "walk.png"];
 

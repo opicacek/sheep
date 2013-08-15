@@ -59,9 +59,18 @@ function play() {
 					//ctx.fillRect(x*map.tile_size, y*map.tile_size, map.tile_size, map.tile_size);
 					
 					ctx.save();
-					ctx.globalAlpha = map.grass[x][y] * 0.11;
+					ctx.globalAlpha = Math.min(map.grass[x][y] * 0.11, 1);
 					ctx.drawImage(grass_img, x*map.tile_size, y*map.tile_size, map.tile_size, map.tile_size, x*map.tile_size, y*map.tile_size, map.tile_size, map.tile_size);
 					ctx.restore();
+					
+					//TODO draw flower
+					if (map.grass[x][y] > 10) {
+						if (map.grass[x][y] == 11) {
+							ctx.drawImage(flower_blue_img, x*map.tile_size, y*map.tile_size);
+						} else if (map.grass[x][y] == 12) {
+							ctx.drawImage(flower_red_img, x*map.tile_size, y*map.tile_size);
+						}
+					}
 					
 				}
 			}
@@ -107,6 +116,7 @@ function play() {
 	//var socket = io.connect('192.168.2.102'); //TODO
 	//var socket = io.connect('localhost'); //TODO
 	var socket = io.connect();
+
 	socket.emit('add_bro', my_bro);
 	
 	// get positions of all Bros

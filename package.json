@@ -3,7 +3,7 @@
 	"version": "0.0.1",
 	"scripts": {
 		"start": "node server.js"
-	}
+	},
 	"dependencies": {
 		"socket.io": "~0.9.6",
 		"node-static": "0.7.0"
