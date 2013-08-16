@@ -84,29 +84,25 @@ function play() {
 			var center_x = bro_list[bro_key].pos[0];
 			var center_y = bro_list[bro_key].pos[1];
 
-			// player represented by circle
-			/*
-			var radius = 10;
-			ctx.beginPath();
-			ctx.arc(center_x, center_y, radius, 0, 2 * Math.PI, false);
-			ctx.fillStyle = "rgb(255, 255, 255)";
-			if (bro_key == my_bro.id) {
-				ctx.fillStyle = "rgb(255, 0, 0)";
+			var animation = bro_list[bro_key].skin.animation;
+			
+			// show skin as wolf
+			if (bro_list[bro_key].red_flower) {
+				var skin = wolf_img;
+				//var animation_frame = Math.floor((bro_list[bro_key].skin.animation_frame) / 4) % skin[animation].length;
+			} else {
+				var skin = sheep_img;
+				//var animation_frame = Math.floor((bro_list[bro_key].skin.animation_frame) / 10) % skin[animation].length;
 			}
 			
-			ctx.fill();
-			*/
-			//var img_index = 0; //TODO get index from server
-			var animation = bro_list[bro_key].skin.animation; //TODO
-			//var animation_frame = bro_list[bro_key].skin.animation_frame; //TODO
-			var animation_frame = Math.floor((bro_list[bro_key].skin.animation_frame) / 10) % sheep_img[animation].length; //TODO
-
+			var animation_frame = Math.floor((bro_list[bro_key].skin.animation_frame) / (20 / skin[animation].length) ) % skin[animation].length;
+			
 			if (bro_list[bro_key].skin.left) {
-				ctx.drawImage(sheep_img[animation][animation_frame], center_x - sheep_img[animation][animation_frame].width/2, center_y - sheep_img[animation][animation_frame].height/2);
+				ctx.drawImage(skin[animation][animation_frame], center_x - skin[animation][animation_frame].width/2, center_y - skin[animation][animation_frame].height/2);
 			} else {
 				ctx.save();
                 ctx.scale(-1, 1);
-				ctx.drawImage(sheep_img[animation][animation_frame], -(center_x + sheep_img[animation][animation_frame].width/2), center_y - sheep_img[animation][animation_frame].height/2);
+				ctx.drawImage(skin[animation][animation_frame], -(center_x + skin[animation][animation_frame].width/2), center_y - skin[animation][animation_frame].height/2);
 				ctx.restore();
 			}
 		}

@@ -51,10 +51,13 @@ Engine.prototype.growthGrass = function() {
 			}
 		}
 	}
-	
 }
 Engine.prototype.eatGrass = function() {
 	for (var bro in this.bro_list) {
+		if ( !(this.bro_list[bro].alive) || this.bro_list[bro].red_flower ) {
+			continue;
+		}
+		
 		var x = Math.floor( this.bro_list[bro].pos[0] / this.tile_size);
 		var y = Math.floor( this.bro_list[bro].pos[1] / this.tile_size);
 		
@@ -78,6 +81,21 @@ Engine.prototype.eatGrass = function() {
 		}
 	}
 }
+Engine.prototype.wolfCheck = function() { // find some victims for hungry wolf
+	for (var bro in this.bro_list) {
+		if (this.bro_list[bro].red_flower) {
+			for (var bro2 in this.bro_list) {
+				if (bro != bro2) {
+					var dist = Math.sqrt( Math.pow(this.bro_list[bro].pos[0] - this.bro_list[bro2].pos[0], 2) + Math.pow(this.bro_list[bro].pos[1] - this.bro_list[bro2].pos[1], 2) );
+					if (dist < 30) {
+						this.bro_list[bro2].alive = false;
+						this.bro_list[bro2].skin.animation = "dead";
+					}
+				}
+			}
+		}
+	}
+}
 Engine.prototype.deleteBro = function(socket_id, parameters) {
 	delete this.bro_list[parameters];
 }
@@ -86,6 +104,11 @@ Engine.prototype.moveBro = function(socket_id, parameters) {
 	var step = 2; // max length of each step
 	
 	var bro = this.bro_list[socket_id];
+	
+	if ( !(this.bro_list[socket_id].alive) ) {
+		return;
+	}
+	
 	if (bro.blue_flower) {
 		bro.blue_flower -= 1;
 		step = 4;
@@ -93,11 +116,9 @@ Engine.prototype.moveBro = function(socket_id, parameters) {
 	
 	if (bro.red_flower) {
 		bro.red_flower -= 1;
-		step = Math.max(3, step);
-		
-		//TODO show skin as wolf
+		//step = Math.max(3, step);
+		step = 3;
 	}
-	
 	
 	var x_delta = parameters[0] - bro.pos[0];
 	var y_delta = parameters[1] - bro.pos[1];
@@ -146,7 +167,8 @@ Engine.prototype.process = function() {
 			this[command](socket_id, parameters);
 		}
 	}
-	
 	this.eatGrass();
+	
+	this.wolfCheck();
 }
 exports.Engine = Engine;
