@@ -26,7 +26,7 @@ function play() {
 	my_bro.pos.push( Math.floor(Math.random()*screen_w), Math.floor(Math.random()*screen_h) );
 
 	//TODO same id for user all the time, get from local storage
-	var id_time = new Date().getTime();
+	var id_time = (new Date().getTime() + "").substring(8);
 	var id_random = Math.floor(Math.random()*100000);
 	my_bro.id = id_time + "" + id_random;
 	my_bro.goal_pos = my_bro.pos;
@@ -86,13 +86,10 @@ function play() {
 
 			var animation = bro_list[bro_key].skin.animation;
 			
+			var skin = sheep_img;
 			// show skin as wolf
 			if (bro_list[bro_key].red_flower) {
 				var skin = wolf_img;
-				//var animation_frame = Math.floor((bro_list[bro_key].skin.animation_frame) / 4) % skin[animation].length;
-			} else {
-				var skin = sheep_img;
-				//var animation_frame = Math.floor((bro_list[bro_key].skin.animation_frame) / 10) % skin[animation].length;
 			}
 			
 			var animation_frame = Math.floor((bro_list[bro_key].skin.animation_frame) / (20 / skin[animation].length) ) % skin[animation].length;
@@ -119,18 +116,52 @@ function play() {
 	socket.on('bro_list', function (data) {
 		//console.log("got Bros from server:", data);
 		bro_list = data.bro_list;
+		updateScore();
 		map = data.map;
 		
 	});
 	
 	function updateScore() {
-		//TODO update highcores
-		/*
+
+		// create list of bros
+		var entries = [];
 		for (var bro_key in bro_list) {
-			console.log(bro_list[bro_key].score);
+			entries.push(bro_list[bro_key]);
 		}
-		console.log("============");
-		*/
+		
+		// sort by score
+		entries = entries.sort( function(a, b) {
+			return (b.score - a.score)
+		});
+		
+		// show highcores
+		var highcore_elem = $('#highscore div');
+		//console.log(highcore_elem);
+		
+		var i = 0;
+		for (; i < Math.min(entries.length, highcore_elem.length); i++) {
+			
+			var color = "#eee";
+			var font_weight = "normal";
+			
+			if (entries[i].id == my_bro.id) { // me
+				var color = "#ff4";
+				font_weight = "bold";
+			}
+			
+			if ( !(entries[i].alive) ) { // dead bro
+				color = "#666";
+			}
+			
+			$( highcore_elem[i] ).find('.id').text(entries[i].id).css({color: color, fontWeight: font_weight});
+			$( highcore_elem[i] ).find('.score').text(entries[i].score);
+		}
+		
+		//TODO clean rest of the highscore table
+		for (; i < highcore_elem.length; i++) {
+			$( highcore_elem[i] ).find('.id').text("");
+			$( highcore_elem[i] ).find('.score').text("");
+		}
 	}
 
 	// send Bro position to server
@@ -161,9 +192,7 @@ function play() {
 			drawWorld();
 						
 			drawBros();
-			
-			updateScore();
-		
+					
 			// update time stuffs
 			then = now - (delta % interval);		
 		}

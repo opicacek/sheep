@@ -85,7 +85,7 @@ Engine.prototype.wolfCheck = function() { // find some victims for hungry wolf
 	for (var bro in this.bro_list) {
 		if (this.bro_list[bro].red_flower) {
 			for (var bro2 in this.bro_list) {
-				if (bro != bro2) {
+				if ( this.bro_list[bro2].red_flower == 0 ) {
 					var dist = Math.sqrt( Math.pow(this.bro_list[bro].pos[0] - this.bro_list[bro2].pos[0], 2) + Math.pow(this.bro_list[bro].pos[1] - this.bro_list[bro2].pos[1], 2) );
 					if (dist < 30) {
 						this.bro_list[bro2].alive = false;
@@ -159,6 +159,10 @@ Engine.prototype.moveBro = function(socket_id, parameters) {
 	
 	bro.pos[0] += x_step * (x_delta > 0 ? 1 : -1);
 	bro.pos[1] += y_step * (y_delta > 0 ? 1 : -1);
+	
+	//TODO set limit
+	bro.pos[0] = Math.min( Math.max(bro.pos[0], 0), this.tile_size*this.grass_size[0] );
+	bro.pos[1] = Math.min( Math.max(bro.pos[1], 0), this.tile_size*this.grass_size[1] );
 }
 Engine.prototype.process = function() {
 	for (var socket_id in this.pipeline) {
