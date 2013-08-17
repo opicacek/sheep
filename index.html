@@ -27,8 +27,8 @@
 
 				outline: 0;
 				border: 0px;
-				margin-left: auto;
-				margin-right: auto;
+
+				float: left;
 			}
 			a {
 				color: #55DD55;
@@ -40,24 +40,39 @@
 			a img {
 				border: none;
 			}
+			#highscore {
+				float: right;
+			}
+			#playground_holder {
+				margin: auto;
+				width: 900px;
+			}
 		</style>
 	</head>
 
 	<body onload="play()">
-		<canvas id="c" width="760" height="400" ></canvas>
-		<div id="highscore">Live score:
-			<div>1. <span class="id"></span> - <span class="score"></span></div>
-			<div>2. <span class="id"></span> - <span class="score"></span></div>
-			<div>3. <span class="id"></span> - <span class="score"></span></div>
-			<div>4. <span class="id"></span> - <span class="score"></span></div>
-			<div>5. <span class="id"></span> - <span class="score"></span></div>
-			<div>6. <span class="id"></span> - <span class="score"></span></div>
-			<div>7. <span class="id"></span> - <span class="score"></span></div>
-			<div>8. <span class="id"></span> - <span class="score"></span></div>
-			<div>9. <span class="id"></span> - <span class="score"></span></div>
+		<div id="playground_holder">
+			<canvas id="c" width="760" height="400" ></canvas>
+			<div id="highscore">LIVE score:<br/>
+				<span>Pos. <span>Player ID</span> - <span>Score</span></span>
+				<div>1. <span class="id"></span> - <span class="score"></span></div>
+				<div>2. <span class="id"></span> - <span class="score"></span></div>
+				<div>3. <span class="id"></span> - <span class="score"></span></div>
+				<div>4. <span class="id"></span> - <span class="score"></span></div>
+				<div>5. <span class="id"></span> - <span class="score"></span></div>
+				<div>6. <span class="id"></span> - <span class="score"></span></div>
+				<div>7. <span class="id"></span> - <span class="score"></span></div>
+				<div>8. <span class="id"></span> - <span class="score"></span></div>
+				<div>9. <span class="id"></span> - <span class="score"></span></div>
+			</div>
 		</div>
+		<div style="clear: both;"></div>
 
-		<p><b>Controls:</b> Use mouse to move your Sheep.</p>
+		<p>Online multiplayer game <b>Sheeps</b> - tell your friends to play with you.</p>
+
+		<p><b>How to play:</b> Eat grass with your sheep to gain higher score.<br/> Eating of flowers can give you super powers.</p>
+
+		<p><b>Controls:</b> Use mouse to move your Sheep.<br/>Refresh page to start new life.</p>
 
 		<div>Based on Bros engine created by: <b>Opi Danihelka</b> &amp; <b>Martin Brázdil</b></div>
 		<p><br/><b>Opi-games</b> 2013<br/>for more games visit: <a href="http://jan.danihelka.net">jan.danihelka.net</a></p>
