@@ -30,6 +30,8 @@ function play() {
 	var id_time = (new Date().getTime() + "").substring(8);
 	var id_random = Math.floor(Math.random()*100000);
 	my_bro.id = id_time + "" + id_random;
+	my_bro.name = my_bro.id;
+	$('#bro_name').val(my_bro.name);
 	my_bro.goal_pos = my_bro.pos;
 	
 	//
@@ -132,6 +134,9 @@ function play() {
 	
 	function updateScore() {
 
+		
+		my_bro.name = $('#bro_name').val();
+
 		// create list of bros
 		var entries = [];
 		for (var bro_key in bro_list) {
@@ -144,7 +149,7 @@ function play() {
 		});
 		
 		// show highcores
-		var highcore_elem = $('#highscore div');
+		var highcore_elem = $('#highscore .row');
 		//console.log(highcore_elem);
 		
 		var i = 0;
@@ -169,7 +174,7 @@ function play() {
 				color = "#666";
 			}
 			
-			$( highcore_elem[i] ).find('.id').text(entries[i].id).css({color: color, fontWeight: font_weight});
+			$( highcore_elem[i] ).find('.id').text(entries[i].name).css({color: color, fontWeight: font_weight});
 			$( highcore_elem[i] ).find('.score').text(entries[i].score);
 		}
 		
@@ -185,7 +190,7 @@ function play() {
 		//console.log("informations send to server");
 		
 		//socket.emit('update_bro', my_bro);
-		socket.emit('update_bro', {moveBro: my_bro.goal_pos});
+		socket.emit('update_bro', {moveBro: my_bro.goal_pos, renameBro: my_bro.name});
 
 		setTimeout(updateBros, 20);
 	}

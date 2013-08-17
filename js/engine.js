@@ -99,6 +99,9 @@ Engine.prototype.wolfCheck = function() { // find some victims for hungry wolf
 Engine.prototype.deleteBro = function(socket_id, parameters) {
 	delete this.bro_list[parameters];
 }
+Engine.prototype.renameBro = function(socket_id, parameters) {
+	this.bro_list[socket_id].name = parameters;
+}
 Engine.prototype.moveBro = function(socket_id, parameters) {
 		
 	var step = 2; // max length of each step

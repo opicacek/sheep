@@ -1,5 +1,6 @@
 function Bro() {
 	this.id;
+	this.name;
 	this.alive = true;
 	this.pos = [];
 	this.goal_pos;

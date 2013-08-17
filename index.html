@@ -42,10 +42,11 @@
 			}
 			#highscore {
 				float: right;
+				width: 150px;
 			}
 			#playground_holder {
 				margin: auto;
-				width: 900px;
+				width: 950px;
 			}
 		</style>
 	</head>
@@ -54,16 +55,22 @@
 		<div id="playground_holder">
 			<canvas id="c" width="760" height="400" ></canvas>
 			<div id="highscore">LIVE score:<br/>
-				<span>Pos. <span>Player ID</span> - <span>Score</span></span>
-				<div>1. <span class="id"></span> - <span class="score"></span></div>
-				<div>2. <span class="id"></span> - <span class="score"></span></div>
-				<div>3. <span class="id"></span> - <span class="score"></span></div>
-				<div>4. <span class="id"></span> - <span class="score"></span></div>
-				<div>5. <span class="id"></span> - <span class="score"></span></div>
-				<div>6. <span class="id"></span> - <span class="score"></span></div>
-				<div>7. <span class="id"></span> - <span class="score"></span></div>
-				<div>8. <span class="id"></span> - <span class="score"></span></div>
-				<div>9. <span class="id"></span> - <span class="score"></span></div>
+				<div>Pos. <span>Player ID</span> - <span>Score</span></div>
+				<div class="row">1. <span class="id"></span> - <span class="score"></span></div>
+				<div class="row">2. <span class="id"></span> - <span class="score"></span></div>
+				<div class="row">3. <span class="id"></span> - <span class="score"></span></div>
+				<div class="row">4. <span class="id"></span> - <span class="score"></span></div>
+				<div class="row">5. <span class="id"></span> - <span class="score"></span></div>
+				<div class="row">6. <span class="id"></span> - <span class="score"></span></div>
+				<div class="row">7. <span class="id"></span> - <span class="score"></span></div>
+				<div class="row">8. <span class="id"></span> - <span class="score"></span></div>
+				<div class="row">9. <span class="id"></span> - <span class="score"></span></div>
+
+				<div>Edit your name:<br/>
+					<form>
+						<input type="text" id="bro_name" />
+					</form>
+				</div>
 			</div>
 		</div>
 		<div style="clear: both;"></div>
