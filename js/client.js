@@ -21,6 +21,7 @@ function play() {
 	//
 	var bro_list; // list of online players
 	var map; // map status
+	var dead_virgin = true; // refresh page after dead
 
 	var my_bro = new Bro(); // player
 	my_bro.pos.push( Math.floor(Math.random()*screen_w), Math.floor(Math.random()*screen_h) );
@@ -147,6 +148,13 @@ function play() {
 			if (entries[i].id == my_bro.id) { // me
 				var color = "#ff4";
 				font_weight = "bold";
+				
+				if ( !(entries[i].alive) && dead_virgin ) { // dead bro
+					dead_virgin = false;
+					setTimeout( function() {
+						location.reload();
+					}, 2000);
+				}
 			}
 			
 			if ( !(entries[i].alive) ) { // dead bro
