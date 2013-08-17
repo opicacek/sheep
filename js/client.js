@@ -85,6 +85,14 @@ function play() {
 			var center_x = bro_list[bro_key].pos[0];
 			var center_y = bro_list[bro_key].pos[1];
 
+			if (bro_list[bro_key].id == my_bro.id) { // me
+				ctx.beginPath();
+				ctx.arc(center_x, center_y, 15, 0, 2 * Math.PI, false);
+				ctx.lineWidth = 3;
+				ctx.strokeStyle = '#f99';
+				ctx.stroke();
+			}
+			
 			var animation = bro_list[bro_key].skin.animation;
 			
 			var skin = sheep_img;
@@ -165,7 +173,7 @@ function play() {
 			$( highcore_elem[i] ).find('.score').text(entries[i].score);
 		}
 		
-		//TODO clean rest of the highscore table
+		// clean rest of the highscore table
 		for (; i < highcore_elem.length; i++) {
 			$( highcore_elem[i] ).find('.id').text("");
 			$( highcore_elem[i] ).find('.score').text("");
