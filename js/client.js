@@ -26,11 +26,45 @@ function play() {
 	var my_bro = new Bro(); // player
 	my_bro.pos.push( Math.floor(Math.random()*screen_w), Math.floor(Math.random()*screen_h) );
 
-	//TODO same id for user all the time, get from local storage
+	// generate bro_id
 	var id_time = (new Date().getTime() + "").substring(8);
 	var id_random = Math.floor(Math.random()*100000);
 	my_bro.id = id_time + "" + id_random;
-	my_bro.name = my_bro.id;
+	
+	// TODO get name from cookie
+	function getCookieName() {
+		var cookies = document.cookie;
+		if (cookies === "") {
+			return false;
+		}
+		
+		var cookies = cookies.split("; ");
+		
+		for(var i = 0; i < cookies.length; i++) {
+			var cookie = cookies[i];
+			
+			var p = cookie.indexOf("=");
+			var name = cookie.substring(0,p);
+			
+			if (name == "username") {
+				var username = cookie.substring(p+1);
+				username = decodeURIComponent(username);
+				if (username.length) {
+					return username;
+				}
+			}
+		}
+		
+		return false;
+	}
+	
+	var cookie_name = getCookieName();
+	
+	if (cookie_name) {
+		my_bro.name = cookie_name;
+	} else { // cookie not found
+		my_bro.name = my_bro.id;
+	}
 	$('#bro_name').val(my_bro.name);
 	my_bro.goal_pos = my_bro.pos;
 	
@@ -137,6 +171,11 @@ function play() {
 		
 		my_bro.name = $('#bro_name').val();
 
+		// save name to cookie
+		if (my_bro.name.length && my_bro.name != my_bro.id) {
+			document.cookie = "username=" + my_bro.name;
+		}
+		
 		// create list of bros
 		var entries = [];
 		for (var bro_key in bro_list) {
